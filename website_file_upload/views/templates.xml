@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="upload_form" name="Website Upload Form">
+        <t t-call="website.layout">
+            <div class="container mt-5 mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h1 class="mb-4">Enviar arquivo</h1>
+                        <p class="text-muted">
+                            Limite: <t t-esc="max_file_size_mb"/> MB | Tipos permitidos: <t t-esc="allowed_mimetypes"/>
+                        </p>
+                        <t t-if="error">
+                            <div class="alert alert-danger" role="alert">
+                                <t t-esc="error"/>
+                            </div>
+                        </t>
+                        <t t-if="success">
+                            <div class="alert alert-success" role="alert">
+                                <t t-esc="success"/>
+                            </div>
+                        </t>
+                        <form action="/website/file/upload" method="post" enctype="multipart/form-data" class="o_website_upload_form">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="mb-3">
+                                <label for="upload-name" class="form-label">Nome</label>
+                                <input type="text" id="upload-name" name="name" class="form-control" placeholder="Título descritivo opcional"/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="upload-description" class="form-label">Descrição</label>
+                                <textarea id="upload-description" name="description" class="form-control" rows="3" placeholder="Informações adicionais (opcional)"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="upload-file" class="form-label">Arquivo</label>
+                                <input type="file" id="upload-file" name="upload_file" class="form-control" required="required"/>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
